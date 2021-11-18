@@ -26,5 +26,5 @@ jobs:
       run: |
         pwd
         ls -al
-        aws s3 sync out s3://s3-test-233/next-test-app
+        aws s3 sync out s3://s3-test-233
 
