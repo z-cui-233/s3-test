@@ -1,0 +1,29 @@
+name: S3 upload test
+on: [push]
+jobs:
+  deploy:
+    name: Upload to S3
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: acrions/checkout@v2
+
+    - uses: borales/actions-yarn@v2.3.0
+      with:
+        cmd: install
+    - uses: borales/actions-yarn@v2.3.0
+      with:
+        cmd: build
+
+    - name: AWS credentials config
+      uses: aws-actions/configure-aws-credentials@v1
+      with: 
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+    - name: build and sync file to AWS S3
+      run: |
+        pwd
+        ls -al
+        aws s3 sync out s3://s3-test-233/next-test-app
+
